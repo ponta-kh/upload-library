@@ -35,7 +35,9 @@ export async function validateUploadedFile({
     }
 
     if (parsedResult.data[0].length !== row) {
-        errorMessages.push(`Expected ${row} columns, but found ${parsedResult.data[0].length}.`);
+        errorMessages.push(
+            `列数が期待値と異なります。期待される列数は ${row} ですが、ファイルには ${parsedResult.data[0].length} 列あります。`,
+        );
     }
 
     // バリデーションチェック前にエラーがあれば早期リターン

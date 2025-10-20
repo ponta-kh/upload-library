@@ -27,7 +27,7 @@ async function parseUtf8FileToLines(file: File, skipLines: number[]): Promise<Pa
         return {
             success: false,
             data: parsedData.data,
-            errorMessages: parsedData.errors.map((e) => `Parsing error: ${e.message}`),
+            errorMessages: parsedData.errors.map((e) => `CSV解析エラー: ${e.message}`),
         };
     }
 
@@ -35,7 +35,7 @@ async function parseUtf8FileToLines(file: File, skipLines: number[]): Promise<Pa
         return {
             success: false,
             data: parsedData.data,
-            errorMessages: ["The file is empty after skipping specified lines."],
+            errorMessages: ["指定された行をスキップした後、ファイルにデータが存在しません"],
         };
     }
 

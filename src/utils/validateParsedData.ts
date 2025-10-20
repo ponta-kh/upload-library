@@ -18,14 +18,14 @@ export function validateParsedData(
         const validatedRow = dataRow.map((cell, colIndex) => {
             const rules = validateRules[colIndex];
             if (!rules) {
-                return { value: cell, errorMessages: ["No validation rules provided for this column."] };
+                return { value: cell, errorMessages: ["この列に対するバリデーションルールが設定されていません"] };
             }
 
             if (isValidateString(rules)) return validateString(cell, rules);
             if (isValidateNumber(rules)) return validateNumber(cell, rules);
             if (isValidateDate(rules)) return validateDate(cell, rules);
 
-            return { value: cell, errorMessages: ["Unknown validation type."] };
+            return { value: cell, errorMessages: ["不明なバリデーションタイプです"] };
         });
 
         // 独自チェックファンクション
