@@ -6,6 +6,12 @@ export interface ParseFileToLinesResult {
     errorMessages: string[];
 }
 
+/**
+ * ファイルを解析して行ごとの文字列配列に変換する
+ * @param file 解析対象のファイル
+ * @param skipLines スキップする行番号の配列
+ * @returns 解析結果
+ */
 export async function parseFileToLines(file: File, skipLines: number[]): Promise<ParseFileToLinesResult> {
     // 現状UTF-8のみ対応
     // 将来的に他のエンコーディング対応を追加する場合はここで分岐させる
@@ -14,6 +20,12 @@ export async function parseFileToLines(file: File, skipLines: number[]): Promise
     return parsedResult;
 }
 
+/**
+ * UTF-8エンコーディングのファイルを解析して行ごとの文字列配列に変換する
+ * @param file 解析対象のファイル
+ * @param skipLines スキップする行番号の配列
+ * @returns 解析結果
+ */
 async function parseUtf8FileToLines(file: File, skipLines: number[]): Promise<ParseFileToLinesResult> {
     const fileText = await file.text();
 

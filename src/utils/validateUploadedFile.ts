@@ -19,6 +19,16 @@ export interface UploadValidationResult {
     errorMessage: string[];
 }
 
+/**
+ * アップロードされたファイルを解析し、バリデーションを実行する
+ * @param param パラメータオブジェクト
+ * @param param.file アップロードされたファイル
+ * @param param.skipLines スキップする行番号
+ * @param param.row 期待される列数
+ * @param param.validateRules 各列のバリデーションルール
+ * @param param.customRowValidator 行全体に対するカスタムバリデーション関数
+ * @returns バリデーション結果
+ */
 export async function validateUploadedFile({
     file,
     skipLines,
@@ -34,7 +44,7 @@ export async function validateUploadedFile({
         errorMessages.push(...parsedResult.errorMessages);
     }
 
-    if (parsedResult.data[0].length !== row) {
+    if (parsedResult.data.length > 0 && parsedResult.data[0].length !== row) {
         errorMessages.push(
             `列数が期待値と異なります。期待される列数は ${row} ですが、ファイルには ${parsedResult.data[0].length} 列あります。`,
         );
@@ -49,10 +59,23 @@ export async function validateUploadedFile({
         };
     }
 
+    // データがない場合はバリデーションをスキップして結果を返す
+    if (parsedResult.data.length === 0) {
+        return {
+            success: true,
+            validatedData: [],
+            errorMessage: [],
+        };
+    }
+
     const validatedData = validateParsedData(parsedResult.data, validateRules, customRowValidator);
 
+    const hasError = validatedData.some(
+        (r) => r.errorMessages.length > 0 || r.values.some((v) => v.errorMessages.length > 0),
+    );
+
     return {
-        success: true,
+        success: !hasError,
         validatedData,
         errorMessage: [],
     };

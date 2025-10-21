@@ -1,5 +1,11 @@
 import type { ValidateString, ValidateNumber, ValidateDate, ValidateResult } from "@/types/validation";
 
+/**
+ * 文字列のバリデーションを実行する
+ * @param value バリデーション対象の文字列
+ * @param rules バリデーションルール
+ * @returns バリデーション結果
+ */
 export function validateString(value: string, rules: ValidateString): ValidateResult {
     const errorMessages: string[] = [];
 
@@ -28,6 +34,12 @@ export function validateString(value: string, rules: ValidateString): ValidateRe
     return { value, errorMessages };
 }
 
+/**
+ * 数値のバリデーションを実行する
+ * @param value バリデーション対象の文字列
+ * @param rules バリデーションルール
+ * @returns バリデーション結果
+ */
 export function validateNumber(value: string, rules: ValidateNumber): ValidateResult {
     const errorMessages: string[] = [];
     const trimmedValue = value.trim().replace(/,/g, "");
@@ -77,6 +89,12 @@ export function validateNumber(value: string, rules: ValidateNumber): ValidateRe
     return { value, errorMessages };
 }
 
+/**
+ * 日付のバリデーションを実行する
+ * @param value バリデーション対象の文字列
+ * @param rules バリデーションルール
+ * @returns バリデーション結果
+ */
 export function validateDate(value: string, rules: ValidateDate): ValidateResult {
     const errorMessages: string[] = [];
     const date = new Date(value);

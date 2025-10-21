@@ -8,6 +8,13 @@ interface Result {
     errorMessages: string[];
 }
 
+/**
+ * 解析済みのデータ配列をバリデーションする
+ * @param data 解析済みのデータ (文字列の2次元配列)
+ * @param validateRules 各列のバリデーションルール
+ * @param customRowValidator 行全体に対するカスタムバリデーション関数
+ * @returns バリデーション結果の配列
+ */
 export function validateParsedData(
     data: string[][],
     validateRules: Validate[],
