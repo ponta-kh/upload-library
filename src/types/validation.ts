@@ -13,7 +13,6 @@ export interface ValidateNumber extends Validate {
     type: "number";
     minValue?: number;
     maxValue?: number;
-    maxIntegerDigits?: number;
     maxDecimalDigits?: number;
 }
 

@@ -46,7 +46,7 @@ export function validateNumber(value: string, rules: ValidateNumber): ValidateRe
     const checkNum = Number(value);
 
     const absNumStr = Math.abs(checkNum).toString();
-    const [integerPart, decimalPart] = absNumStr.split(".");
+    const decimalPart = absNumStr.split(".")[1];
 
     // 必須チェック
     if (rules.isRequired) {
@@ -74,11 +74,6 @@ export function validateNumber(value: string, rules: ValidateNumber): ValidateRe
         if (checkNum > rules.maxValue) {
             errorMessages.push(`最大値は ${rules.maxValue} です`);
         }
-    }
-
-    // 整数部桁数チェック
-    if (rules.maxIntegerDigits !== undefined && integerPart.length > rules.maxIntegerDigits) {
-        errorMessages.push(`整数部分は最大 ${rules.maxIntegerDigits} 桁まで入力できます`);
     }
 
     // 小数部桁数チェック

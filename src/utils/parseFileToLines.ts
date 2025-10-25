@@ -29,10 +29,20 @@ export async function parseFileToLines(file: File, skipLines: number[]): Promise
 async function parseUtf8FileToLines(file: File, skipLines: number[]): Promise<ParseFileToLinesResult> {
     const fileText = await file.text();
 
-    const parsedData = Papa.parse<string[]>(fileText, {
+    // 不要行を削除した結果、空になる可能性があるため、beforeFirstChunkは使えない
+    const filteredText = filterSkippedLines(fileText, skipLines);
+
+    if (!filteredText.trim()) {
+        return {
+            success: false,
+            data: [],
+            errorMessages: ["ファイルにデータが存在しません"],
+        };
+    }
+
+    const parsedData = Papa.parse<string[]>(filteredText, {
         header: false,
         skipEmptyLines: true,
-        beforeFirstChunk: (chunk) => filterSkippedLines(chunk, skipLines),
     });
 
     if (parsedData.errors.length > 0) {
@@ -40,14 +50,6 @@ async function parseUtf8FileToLines(file: File, skipLines: number[]): Promise<Pa
             success: false,
             data: parsedData.data,
             errorMessages: parsedData.errors.map((e) => `CSV解析エラー: ${e.message}`),
-        };
-    }
-
-    if (parsedData.data.length === 0) {
-        return {
-            success: false,
-            data: parsedData.data,
-            errorMessages: ["指定された行をスキップした後、ファイルにデータが存在しません"],
         };
     }
 

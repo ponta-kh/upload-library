@@ -42,71 +42,85 @@ describe("validateString（文字列バリデーション）", () => {
 // ============================
 // validateNumber
 // ============================
-describe("validateNumber（数値バリデーション）", () => {
-    const rules: ValidateNumber = {
-        type: "number",
-        isRequired: true,
-        minValue: 10,
-        maxValue: 100,
-        maxIntegerDigits: 3,
-        maxDecimalDigits: 2,
-    };
+describe("数値バリデーション", () => {
+    describe("正の数チェック", () => {
+        const rules: ValidateNumber = {
+            type: "number",
+            isRequired: true,
+            minValue: 10,
+            maxValue: 900,
+            maxDecimalDigits: 2,
+        };
 
-    it("必須チェック: 空文字はエラー", () => {
-        const result = validateNumber("", rules);
-        expect(result.errorMessages).toContain("この項目は必須です");
+        it("必須チェック: 空文字はエラー", () => {
+            const result = validateNumber("", rules);
+            expect(result.errorMessages).toContain("この項目は必須です");
+        });
+
+        it("数値変換: 数値でない文字はエラー", () => {
+            const result = validateNumber("abc", rules);
+            expect(result.errorMessages).toContain("数値を入力してください");
+        });
+
+        it("境界値: 最小値ちょうど（10）はOK", () => {
+            const result = validateNumber("10", rules);
+            expect(result.errorMessages).toHaveLength(0);
+        });
+
+        it("境界値: 最小値−1（9.99）はエラー", () => {
+            const result = validateNumber("9.99", rules);
+            expect(result.errorMessages).toContain("最小値は 10 です");
+        });
+
+        it("境界値: 最大値ちょうど（900）はOK", () => {
+            const result = validateNumber("900", rules);
+            expect(result.errorMessages).toHaveLength(0);
+        });
+
+        it("境界値: 最大値+0.01（900.01）はエラー", () => {
+            const result = validateNumber("900.01", rules);
+            expect(result.errorMessages).toContain("最大値は 900 です");
+        });
+
+        it("小数桁数: 2桁（12.34）はOK", () => {
+            const result = validateNumber("12.34", rules);
+            expect(result.errorMessages).toHaveLength(0);
+        });
+
+        it("小数桁数: 3桁（12.345）はエラー", () => {
+            const result = validateNumber("12.345", rules);
+            expect(result.errorMessages).toContain("小数部分は最大 2 桁まで入力できます");
+        });
     });
 
-    it("数値変換: 数値でない文字はエラー", () => {
-        const result = validateNumber("abc", rules);
-        expect(result.errorMessages).toContain("数値を入力してください");
-    });
+    describe("負の数チェック", () => {
+        const rules: ValidateNumber = {
+            type: "number",
+            isRequired: true,
+            minValue: -100,
+            maxValue: -10,
+            maxDecimalDigits: 2,
+        };
 
-    it("境界値: 最小値ちょうど（10）はOK", () => {
-        const result = validateNumber("10", rules);
-        expect(result.errorMessages).toHaveLength(0);
-    });
+        it("境界値: 最大値-10はOK", () => {
+            const ok = validateNumber("-10", rules);
+            expect(ok.errorMessages).toHaveLength(0);
+        });
 
-    it("境界値: 最小値−1（9.99）はエラー", () => {
-        const result = validateNumber("9.99", rules);
-        expect(result.errorMessages).toContain("最小値は 10 です");
-    });
+        it("境界値: 最大値-9はNG", () => {
+            const ng = validateNumber("-9", rules);
+            expect(ng.errorMessages).toContain("最大値は -10 です");
+        });
 
-    it("境界値: 最大値ちょうど（100）はOK", () => {
-        const result = validateNumber("100", rules);
-        expect(result.errorMessages).toHaveLength(0);
-    });
+        it("境界値: 最小値-100はOK", () => {
+            const ok = validateNumber("-100", rules);
+            expect(ok.errorMessages).toHaveLength(0);
+        });
 
-    it("境界値: 最大値+1（100.01）はエラー", () => {
-        const result = validateNumber("100.01", rules);
-        expect(result.errorMessages).toContain("最大値は 100 です");
-    });
-
-    it("整数桁数: 3桁（999）はOK", () => {
-        const result = validateNumber("999", rules);
-        expect(result.errorMessages).toHaveLength(0);
-    });
-
-    it("整数桁数: 4桁（1000）はエラー", () => {
-        const result = validateNumber("1000", rules);
-        expect(result.errorMessages).toContain("整数部分は最大 3 桁まで入力できます");
-    });
-
-    it("小数桁数: 2桁（12.34）はOK", () => {
-        const result = validateNumber("12.34", rules);
-        expect(result.errorMessages).toHaveLength(0);
-    });
-
-    it("小数桁数: 3桁（12.345）はエラー", () => {
-        const result = validateNumber("12.345", rules);
-        expect(result.errorMessages).toContain("小数部分は最大 2 桁まで入力できます");
-    });
-
-    it("境界値: 負数もチェック（-10はOK、-11はエラー）", () => {
-        const ok = validateNumber("-10", rules);
-        const ng = validateNumber("-11", rules);
-        expect(ok.errorMessages).toHaveLength(0);
-        expect(ng.errorMessages).toContain("最小値は 10 です");
+        it("境界値: 最大値-100.01はNG", () => {
+            const ng = validateNumber("-100.01", rules);
+            expect(ng.errorMessages).toContain("最小値は -100 です");
+        });
     });
 });
 

@@ -60,7 +60,7 @@ describe("parseFileToLines", () => {
         const result = await parseFileToLines(file, [0, 1]);
 
         expect(result.success).toBe(false);
-        expect(result.errorMessages).toEqual(["指定された行をスキップした後、ファイルにデータが存在しません"]);
+        expect(result.errorMessages).toEqual(["ファイルにデータが存在しません"]);
     });
 
     it("空ファイルを解析するとエラーを返す", async () => {
@@ -69,7 +69,7 @@ describe("parseFileToLines", () => {
         const result = await parseFileToLines(file, []);
 
         expect(result.success).toBe(false);
-        expect(result.errorMessages[0]).toMatch(/ファイルにデータが存在しません/);
+        expect(result.errorMessages).toEqual(["ファイルにデータが存在しません"]);
     });
 
     it("パースエラーが発生した場合はerrorMessagesを返す（不正CSV）", async () => {

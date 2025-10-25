@@ -3,7 +3,7 @@ import { validateParsedData } from "../../src/utils/validateParsedData";
 import type { Validate } from "../../src/types/validation";
 
 describe("validateParsedData", () => {
-    it("should validate data based on rules", () => {
+    it("ルールに基づいてデータを検証できること", () => {
         const data = [
             ["hello", "123", "2025-01-01"],
             ["", "abc", "not-a-date"],
@@ -17,20 +17,21 @@ describe("validateParsedData", () => {
         const result = validateParsedData(data, validateRules);
 
         expect(result.length).toBe(2);
-        // Row 1
+
+        // 1行目（正常データ）
         expect(result[0].values[0].errorMessages.length).toBe(0);
         expect(result[0].values[1].errorMessages.length).toBe(0);
         expect(result[0].values[2].errorMessages.length).toBe(0);
         expect(result[0].errorMessages.length).toBe(0);
 
-        // Row 2
-        expect(result[1].values[0].errorMessages).toContain("This field is required.");
-        expect(result[1].values[1].errorMessages).toContain("This field must be a number.");
-        expect(result[1].values[2].errorMessages).toContain("This field must be a valid date.");
+        // 2行目（エラーあり）
+        expect(result[1].values[0].errorMessages).toContain("この項目は必須です");
+        expect(result[1].values[1].errorMessages).toContain("数値を入力してください");
+        expect(result[1].values[2].errorMessages).toContain("有効な日付を入力してください");
         expect(result[1].errorMessages.length).toBe(0);
     });
 
-    it("should use custom row validator", () => {
+    it("カスタム行バリデータを使用できること", () => {
         const data = [["a", "b"]];
         const validateRules: Validate[] = [
             { type: "string", isRequired: true },
@@ -38,7 +39,7 @@ describe("validateParsedData", () => {
         ];
         const customRowValidator = (dataRow: string[]) => {
             if (dataRow[0] === "a" && dataRow[1] === "b") {
-                return ["Custom error for a and b"];
+                return ["aとbの組み合わせは許可されていません。"];
             }
             return [];
         };
@@ -46,27 +47,27 @@ describe("validateParsedData", () => {
         const result = validateParsedData(data, validateRules, customRowValidator);
 
         expect(result.length).toBe(1);
-        expect(result[0].errorMessages).toEqual(["Custom error for a and b"]);
+        expect(result[0].errorMessages).toEqual(["aとbの組み合わせは許可されていません。"]);
     });
 
-    it("should handle missing validation rule for a column", () => {
+    it("列に対応するバリデーションルールが存在しない場合の処理", () => {
         const data = [["a", "b"]];
-        const validateRules: Validate[] = [{ type: "string", isRequired: true }]; // Rule only for first column
+        const validateRules: Validate[] = [{ type: "string", isRequired: true }]; // 1列目のみルールあり
 
         const result = validateParsedData(data, validateRules);
 
         expect(result.length).toBe(1);
         expect(result[0].values[0].errorMessages.length).toBe(0);
-        expect(result[0].values[1].errorMessages).toContain("No validation rules provided for this column.");
+        expect(result[0].values[1].errorMessages).toContain("この列に対するバリデーションルールが設定されていません");
     });
 
-    it("should handle unknown validation type", () => {
+    it("不明なバリデーションタイプを処理できること", () => {
         const data = [["a"]];
         const validateRules: Validate[] = [{ type: "unknown" } as any];
 
         const result = validateParsedData(data, validateRules);
 
         expect(result.length).toBe(1);
-        expect(result[0].values[0].errorMessages).toContain("Unknown validation type.");
+        expect(result[0].values[0].errorMessages).toContain("不明なバリデーションタイプです");
     });
 });
