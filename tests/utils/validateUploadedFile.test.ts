@@ -8,7 +8,7 @@ describe("validateUploadedFile", () => {
     it("CSVの解析に失敗した場合、success が false を返すこと", async () => {
         const file = new File([""], "test.csv");
         const rules: Validate[] = [];
-        const param = { file, skipLines: [], row: 1, validateRules: rules };
+        const row = 1;
 
         // parseFileToLines をモックして解析失敗を再現
         vi.spyOn(parseFileToLines, "parseFileToLines").mockResolvedValue({
@@ -17,7 +17,7 @@ describe("validateUploadedFile", () => {
             errorMessages: ["Parsing failed"],
         });
 
-        const result = await validateUploadedFile(param);
+        const result = await validateUploadedFile(file, [], row, rules);
 
         expect(result.success).toBe(false);
         expect(result.errorMessage).toContain("Parsing failed");
@@ -26,7 +26,7 @@ describe("validateUploadedFile", () => {
     it("列数が期待値と一致しない場合、success が false を返すこと", async () => {
         const file = new File(["a,b"], "test.csv");
         const rules: Validate[] = [];
-        const param = { file, skipLines: [], row: 3, validateRules: rules };
+        const row = 3;
 
         // パース結果のデータ列数を 2 にして、期待値 3 との不一致を再現
         vi.spyOn(parseFileToLines, "parseFileToLines").mockResolvedValue({
@@ -35,7 +35,7 @@ describe("validateUploadedFile", () => {
             errorMessages: [],
         });
 
-        const result = await validateUploadedFile(param);
+        const result = await validateUploadedFile(file, [], row, rules);
 
         expect(result.success).toBe(false);
         expect(result.errorMessage).toContain(
@@ -49,7 +49,7 @@ describe("validateUploadedFile", () => {
             { type: "string", isRequired: true },
             { type: "string", isRequired: true },
         ];
-        const param = { file, skipLines: [], row: 2, validateRules: rules };
+        const row = 2;
 
         const parsedData = [["a", "b"]];
         const validatedData = [
@@ -72,7 +72,7 @@ describe("validateUploadedFile", () => {
         // validateParsedData のモックを作成
         const validateParsedDataSpy = vi.spyOn(validateParsedData, "validateParsedData").mockReturnValue(validatedData);
 
-        const result = await validateUploadedFile(param);
+        const result = await validateUploadedFile(file, [], row, rules);
 
         // 成功した結果を検証
         expect(result.success).toBe(true);

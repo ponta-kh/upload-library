@@ -2,14 +2,6 @@ import type { Validate, ValidateResult } from "@/types/validation";
 import { parseFileToLines } from "./parseFileToLines";
 import { validateParsedData } from "./validateParsedData";
 
-export interface validateUploadedFileParam {
-    file: File;
-    skipLines: number[];
-    row: number;
-    validateRules: Validate[];
-    customRowValidator?: (dataRow: string[]) => string[];
-}
-
 export interface UploadValidationResult {
     success: boolean;
     validatedData: {
@@ -21,21 +13,20 @@ export interface UploadValidationResult {
 
 /**
  * アップロードされたファイルを解析し、バリデーションを実行する
- * @param param パラメータオブジェクト
- * @param param.file アップロードされたファイル
- * @param param.skipLines スキップする行番号
- * @param param.row 期待される列数
- * @param param.validateRules 各列のバリデーションルール
- * @param param.customRowValidator 行全体に対するカスタムバリデーション関数
+ * @param file アップロードされたファイル
+ * @param skipLines スキップする行番号
+ * @param row 期待される列数
+ * @param validateRules 各列のバリデーションルール
+ * @param customRowValidator 行全体に対するカスタムバリデーション関数
  * @returns バリデーション結果
  */
-export async function validateUploadedFile({
-    file,
-    skipLines,
-    row,
-    validateRules,
-    customRowValidator,
-}: validateUploadedFileParam): Promise<UploadValidationResult> {
+export async function validateUploadedFile(
+    file: File,
+    skipLines: number[],
+    row: number,
+    validateRules: Validate[],
+    customRowValidator?: (dataRow: string[]) => string[],
+): Promise<UploadValidationResult> {
     const errorMessages: string[] = [];
 
     const parsedResult = await parseFileToLines(file, skipLines);
