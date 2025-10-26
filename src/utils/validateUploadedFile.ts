@@ -1,15 +1,7 @@
-import type { Validate, ValidateResult } from "@/types/validation";
+import type { Validate } from "@/types/validation";
+import type { UploadValidationResult } from "@/types/funcResult";
 import { parseFileToLines } from "./parseFileToLines";
 import { validateParsedData } from "./validateParsedData";
-
-export interface UploadValidationResult {
-    success: boolean;
-    validatedData: {
-        values: ValidateResult[];
-        errorMessages: string[];
-    }[];
-    errorMessage: string[];
-}
 
 /**
  * アップロードされたファイルを解析し、バリデーションを実行する

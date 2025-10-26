@@ -1,12 +1,8 @@
-import type { Validate, ValidateResult } from "@/types/validation";
+import type { Validate } from "@/types/validation";
+import type { ValidateParsedDataResult } from "@/types/funcResult";
 
 import { isValidateString, isValidateNumber, isValidateDate } from "@/utils/typeGuards";
 import { validateDate, validateNumber, validateString } from "./validators";
-
-interface Result {
-    values: ValidateResult[];
-    errorMessages: string[];
-}
 
 /**
  * 解析済みのデータ配列をバリデーションする
@@ -19,7 +15,7 @@ export function validateParsedData(
     data: string[][],
     validateRules: Validate[],
     customRowValidator?: (dataRow: string[]) => string[],
-): Result[] {
+): ValidateParsedDataResult[] {
     return data.map((dataRow) => {
         // 各セルの値をバリデーション
         const validatedRow = dataRow.map((cell, colIndex) => {

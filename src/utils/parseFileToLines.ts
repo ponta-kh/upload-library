@@ -1,10 +1,5 @@
 import Papa from "papaparse";
-
-export interface ParseFileToLinesResult {
-    success: boolean;
-    data: string[][];
-    errorMessages: string[];
-}
+import type { ParseFileToLinesResult } from "@/types/funcResult";
 
 /**
  * ファイルを解析して行ごとの文字列配列に変換する
