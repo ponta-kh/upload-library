@@ -1,11 +1,7 @@
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/shadcn/tooltip";
+import type { ValidateResult } from "@/types/validation";
 
-interface TableColumnCellProps {
-    value: string;
-    errorMessages?: string[];
-}
-
-export function TableColumnCell({ value, errorMessages }: TableColumnCellProps) {
+export function TableColumnCell({ value, errorMessages }: ValidateResult) {
     return (
         <div>
             <Tooltip>

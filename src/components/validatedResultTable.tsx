@@ -1,24 +1,11 @@
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/shadcn/table";
 import { ErrorColumnCell } from "./errorColumCell";
 import { TableColumnCell } from "./tableColumnCell";
-
-interface ValidatedResultTableProps {
-    tableHeader: {
-        label: React.ReactNode;
-        className?: string;
-    }[];
-    validatedData: {
-        value: {
-            value: string;
-            errorMessages: string[];
-        }[];
-        errorMessages: string[];
-    }[];
-}
+import type { ValidatedResultTableProps } from "@/types/componentProps";
 
 export async function ValidatedResultTable({ tableHeader, validatedData }: ValidatedResultTableProps) {
     const errorCount = validatedData.filter(
-        (item) => item.errorMessages.length > 0 || item.value.some((v) => v.errorMessages.length > 0),
+        (item) => item.errorMessages.length > 0 || item.values.some((v) => v.errorMessages.length > 0),
     ).length;
     const validatedResult = `${errorCount}件 / ${validatedData.length}件`;
 
@@ -43,7 +30,7 @@ export async function ValidatedResultTable({ tableHeader, validatedData }: Valid
                                 <ErrorColumnCell rowCount={rowIndex + 1} errorMessages={row.errorMessages} />
                             )}
                         </TableCell>
-                        {row.value.map((cell, cellIndex) => (
+                        {row.values.map((cell, cellIndex) => (
                             <TableCell key={cellIndex} className={cell.errorMessages.length > 0 ? "bg-red-100" : ""}>
                                 <TableColumnCell value={cell.value} errorMessages={cell.errorMessages} />
                             </TableCell>
