@@ -3,7 +3,7 @@ import { ErrorColumnCell } from "./errorColumCell";
 import { TableColumnCell } from "./tableColumnCell";
 import type { ValidatedResultTableProps } from "@/types/componentProps";
 
-export async function ValidatedResultTable({ tableHeader, validatedData }: ValidatedResultTableProps) {
+export function ValidatedResultTable({ tableHeader, validatedData }: ValidatedResultTableProps) {
     const errorCount = validatedData.filter(
         (item) => item.errorMessages.length > 0 || item.values.some((v) => v.errorMessages.length > 0),
     ).length;

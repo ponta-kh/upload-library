@@ -2,18 +2,22 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/shadcn/too
 import type { ValidateResult } from "@/types/validation";
 
 export function TableColumnCell({ value, errorMessages }: ValidateResult) {
+    const hasError = errorMessages && errorMessages.length > 0;
+
     return (
         <div>
-            <Tooltip>
-                <TooltipTrigger>{value}</TooltipTrigger>
-                {errorMessages && (
+            {hasError ? (
+                <Tooltip>
+                    <TooltipTrigger>{value}</TooltipTrigger>
                     <TooltipContent>
                         {errorMessages.map((error, index) => (
                             <p key={index}>{error}</p>
                         ))}
                     </TooltipContent>
-                )}
-            </Tooltip>
+                </Tooltip>
+            ) : (
+                value
+            )}
         </div>
     );
 }
