@@ -13,11 +13,11 @@ export function ValidatedResultTable({ tableHeader, validatedData }: ValidatedRe
         <div className="w-full rounded-md border">
             <Table>
                 <TableHeader>
-                    <TableRow className="bg-muted/50 hover:bg-muted/50">
+                    <TableRow className="border-b bg-muted/50 hover:bg-muted/50">
                         {/* エラー表示列。何を表示するかは検討中。とりあえずセルだけは作っておく。 */}
                         <TableHead className="w-12"></TableHead>
                         {tableHeader.map((headerCell, index) => (
-                            <TableHead key={index} className={headerCell.className}>
+                            <TableHead key={index} className={`${headerCell.className} font-semibold`}>
                                 {headerCell.label}
                             </TableHead>
                         ))}
@@ -25,7 +25,7 @@ export function ValidatedResultTable({ tableHeader, validatedData }: ValidatedRe
                 </TableHeader>
                 <TableBody>
                     {validatedData.map((row, rowIndex) => (
-                        <TableRow key={rowIndex}>
+                        <TableRow key={rowIndex} className="even:bg-muted/20">
                             <TableCell>
                                 {row.errorMessages.length > 0 && (
                                     <ErrorColumnCell rowCount={rowIndex + 1} errorMessages={row.errorMessages} />
