@@ -10,41 +10,48 @@ export function ValidatedResultTable({ tableHeader, validatedData }: ValidatedRe
     const validatedResult = `${errorCount}件 / ${validatedData.length}件`;
 
     return (
-        <Table>
-            <TableHeader>
-                <TableRow>
-                    {/* エラー表示列。何を表示するかは検討中。とりあえずセルだけは作っておく。 */}
-                    <TableHead></TableHead>
-                    {tableHeader.map((headerCell, index) => (
-                        <TableHead key={index} className={headerCell.className}>
-                            {headerCell.label}
-                        </TableHead>
-                    ))}
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                {validatedData.map((row, rowIndex) => (
-                    <TableRow key={rowIndex}>
-                        <TableCell>
-                            {row.errorMessages.length > 0 && (
-                                <ErrorColumnCell rowCount={rowIndex + 1} errorMessages={row.errorMessages} />
-                            )}
-                        </TableCell>
-                        {row.values.map((cell, cellIndex) => (
-                            <TableCell key={cellIndex} className={cell.errorMessages.length > 0 ? "bg-red-100" : ""}>
-                                <TableColumnCell value={cell.value} errorMessages={cell.errorMessages} />
-                            </TableCell>
+        <div className="w-full rounded-md border">
+            <Table>
+                <TableHeader>
+                    <TableRow className="bg-muted/50 hover:bg-muted/50">
+                        {/* エラー表示列。何を表示するかは検討中。とりあえずセルだけは作っておく。 */}
+                        <TableHead className="w-12"></TableHead>
+                        {tableHeader.map((headerCell, index) => (
+                            <TableHead key={index} className={headerCell.className}>
+                                {headerCell.label}
+                            </TableHead>
                         ))}
                     </TableRow>
-                ))}
-            </TableBody>
-            <TableFooter>
-                <TableRow>
-                    <TableCell>エラー件数</TableCell>
-                    {/* 残りのセルを全て結合する。テーブル列はエラー表示列 + 表示項目数になるので、colSpanはヘッダー用propsの要素数を使用すれば良い */}
-                    <TableCell colSpan={tableHeader.length}>{validatedResult}</TableCell>
-                </TableRow>
-            </TableFooter>
-        </Table>
+                </TableHeader>
+                <TableBody>
+                    {validatedData.map((row, rowIndex) => (
+                        <TableRow key={rowIndex}>
+                            <TableCell>
+                                {row.errorMessages.length > 0 && (
+                                    <ErrorColumnCell rowCount={rowIndex + 1} errorMessages={row.errorMessages} />
+                                )}
+                            </TableCell>
+                            {row.values.map((cell, cellIndex) => (
+                                <TableCell
+                                    key={cellIndex}
+                                    className={cell.errorMessages.length > 0 ? "bg-destructive/10" : ""}
+                                >
+                                    <TableColumnCell value={cell.value} errorMessages={cell.errorMessages} />
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    ))}
+                </TableBody>
+                <TableFooter>
+                    <TableRow className="bg-muted hover:bg-muted">
+                        <TableCell className="font-medium">エラー件数</TableCell>
+                        {/* 残りのセルを全て結合する。テーブル列はエラー表示列 + 表示項目数になるので、colSpanはヘッダー用propsの要素数を使用すれば良い */}
+                        <TableCell colSpan={tableHeader.length} className="font-medium">
+                            {validatedResult}
+                        </TableCell>
+                    </TableRow>
+                </TableFooter>
+            </Table>
+        </div>
     );
 }

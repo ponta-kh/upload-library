@@ -16,7 +16,7 @@ export function ErrorColumnCell({ rowCount, errorMessages }: ErrorColumnCellProp
     return (
         <Dialog>
             <DialogTrigger>
-                <Button variant="link">エラーまとめ</Button>
+                <Button variant="link" className="h-auto p-0">エラーまとめ</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
@@ -30,7 +30,7 @@ export function ErrorColumnCell({ rowCount, errorMessages }: ErrorColumnCellProp
 
                 <DialogFooter>
                     <DialogClose asChild>
-                        <Button variant="secondary">閉じる</Button>
+                        <Button variant="secondary" className="w-full">閉じる</Button>
                     </DialogClose>
                 </DialogFooter>
             </DialogContent>
