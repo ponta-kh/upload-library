@@ -1,0 +1,68 @@
+import type { Validate } from "@/types/validation";
+import type { UploadValidationResult } from "@/types/funcResult";
+import { parseFileToLines } from "./parseFileToLines";
+import { validateParsedData } from "./validateParsedData";
+
+/**
+ * アップロードされたファイルを解析し、バリデーションを実行する
+ * @param file アップロードされたファイル
+ * @param skipLines スキップする行番号
+ * @param row 期待される列数
+ * @param validateRules 各列のバリデーションルール
+ * @param customRowValidator 行全体に対するカスタムバリデーション関数
+ * @returns バリデーション結果
+ */
+export async function validateUploadedFile(
+    file: File,
+    skipLines: number[],
+    row: number,
+    validateRules: Validate[],
+    customRowValidator?: (dataRow: string[]) => string[],
+): Promise<UploadValidationResult> {
+    const errorMessages: string[] = [];
+
+    const parsedResult = await parseFileToLines(file, skipLines);
+
+    if (!parsedResult.success) {
+        errorMessages.push(...parsedResult.errorMessages);
+    }
+
+    if (parsedResult.data.length > 0 && parsedResult.data[0].length !== row) {
+        errorMessages.push(
+            `列数が期待値と異なります。期待される列数は ${row} ですが、ファイルには ${parsedResult.data[0].length} 列あります。`,
+        );
+    }
+
+    // バリデーションチェック前にエラーがあれば早期リターン
+    if (errorMessages.length > 0) {
+        return {
+            success: false,
+            validatedData: [],
+            hasError: false,
+            errorMessage: errorMessages,
+        };
+    }
+
+    // データがない場合はバリデーションをスキップして結果を返す
+    if (parsedResult.data.length === 0) {
+        return {
+            success: true,
+            validatedData: [],
+            hasError: false,
+            errorMessage: [],
+        };
+    }
+
+    const validatedData = validateParsedData(parsedResult.data, validateRules, customRowValidator);
+
+    const hasError = validatedData.some(
+        (r) => r.errorMessages.length > 0 || r.values.some((v) => v.errorMessages.length > 0),
+    );
+
+    return {
+        success: true,
+        validatedData,
+        hasError,
+        errorMessage: [],
+    };
+}
