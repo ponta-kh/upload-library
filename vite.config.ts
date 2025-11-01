@@ -29,7 +29,7 @@ export default defineConfig({
                     }),
                 ],
                 test: {
-                    name: "storybook",
+                    name: "components",
                     browser: {
                         enabled: true,
                         headless: true,
@@ -46,7 +46,7 @@ export default defineConfig({
             {
                 extends: true,
                 test: {
-                    name: "unit",
+                    name: "utils",
                     include: ["tests/**/*.test.{ts,tsx}"],
                 },
             },
