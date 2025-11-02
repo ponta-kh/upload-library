@@ -1,4 +1,4 @@
-# Logs
+# === Logs ===
 logs
 *.log
 npm-debug.log*
@@ -7,21 +7,32 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# === Dependency directories ===
+node_modules/
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# === Build output ===
+dist/
+dist-ssr/
+.storybook/cache/
+storybook-static/
+.next/
+out/
+
+# === Local environment files ===
+*.local
+.env
+.env.*.local
+
+# === Editor / IDE ===
+.vscode/
+!.vscode/extensions.json  # 推奨拡張は残す
+.idea/
 .DS_Store
-*.suo
-*.ntvs*
+*.sw?                     # Vim swap files
+*.suo                     # Visual Studio user options
+*.ntvs*                   # Node.js project files (legacy)
 *.njsproj
 *.sln
-*.sw?
 
+# === Misc ===
 *storybook.log
-storybook-static
