@@ -1,11 +1,32 @@
 {
-    "name": "upload-library",
-    "private": true,
-    "version": "0.0.0",
+    "name": "@yourname/upload-library",
+    "version": "0.5.0",
     "type": "module",
+    "description": "CSVアップロード＆検証コンポーネントのReactライブラリ",
+    "private": false,
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "keywords": [
+        "react",
+        "csv",
+        "upload",
+        "validation"
+    ],
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/yourname/upload-library.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
     "scripts": {
         "dev": "vite",
-        "build": "tsc -b && vite build",
+        "build": "tsc -p tsconfig.build.json",
         "lint": "eslint .",
         "preview": "vite preview",
         "test": "vitest",
