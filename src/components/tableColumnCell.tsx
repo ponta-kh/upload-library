@@ -1,6 +1,6 @@
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/shadcn/tooltip";
-import type { ValidateResult } from "@/types/validation";
 import { AlertTriangle } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../components/shadcn/tooltip";
+import type { ValidateResult } from "../types/validation";
 
 export function TableColumnCell({ value, errorMessages }: ValidateResult) {
     const hasError = errorMessages && errorMessages.length > 0;

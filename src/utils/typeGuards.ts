@@ -1,4 +1,4 @@
-import type { Validate, ValidateString, ValidateNumber, ValidateDate } from "@/types/validation";
+import type { Validate, ValidateString, ValidateNumber, ValidateDate } from "../types/validation";
 
 /**
  * ValidateString型かどうかを判定する型ガード

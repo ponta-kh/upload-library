@@ -1,5 +1,5 @@
 import Papa from "papaparse";
-import type { ParseFileToLinesResult } from "@/types/funcResult";
+import type { ParseFileToLinesResult } from "../types/funcResult";
 
 /**
  * ファイルを解析して行ごとの文字列配列に変換する

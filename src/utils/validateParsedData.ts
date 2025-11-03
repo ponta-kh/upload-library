@@ -1,7 +1,7 @@
-import type { Validate } from "@/types/validation";
-import type { ValidateParsedDataResult } from "@/types/funcResult";
+import type { Validate } from "../types/validation";
+import type { ValidateParsedDataResult } from "../types/funcResult";
 
-import { isValidateString, isValidateNumber, isValidateDate } from "@/utils/typeGuards";
+import { isValidateString, isValidateNumber, isValidateDate } from "./typeGuards";
 import { validateDate, validateNumber, validateString } from "./validators";
 
 /**

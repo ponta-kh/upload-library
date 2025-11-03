@@ -1,7 +1,7 @@
-import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/shadcn/table";
+import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "./shadcn/table";
 import { ErrorColumnCell } from "./errorColumCell";
 import { TableColumnCell } from "./tableColumnCell";
-import type { ValidatedResultTableProps } from "@/types/componentProps";
+import type { ValidatedResultTableProps } from "../types/componentProps";
 
 export function ValidatedResultTable({ tableHeader, validatedData }: ValidatedResultTableProps) {
     const errorCount = validatedData.filter(

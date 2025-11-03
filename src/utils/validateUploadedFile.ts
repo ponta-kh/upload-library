@@ -1,5 +1,5 @@
-import type { Validate } from "@/types/validation";
-import type { UploadValidationResult } from "@/types/funcResult";
+import type { Validate } from "../types/validation";
+import type { UploadValidationResult } from "../types/funcResult";
 import { parseFileToLines } from "./parseFileToLines";
 import { validateParsedData } from "./validateParsedData";
 

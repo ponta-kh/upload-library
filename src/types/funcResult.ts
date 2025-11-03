@@ -1,4 +1,4 @@
-import type { ValidateResult } from "@/types/validation";
+import type { ValidateResult } from "../types/validation";
 
 /* parseFileToLines.ts */
 export interface ParseFileToLinesResult {

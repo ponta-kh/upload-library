@@ -1,4 +1,4 @@
-import type { ValidateParsedDataResult } from "@/types/funcResult";
+import type { ValidateParsedDataResult } from "../types/funcResult";
 
 /* ValidatedResultTable.tsx */
 export interface ValidatedResultTableProps {

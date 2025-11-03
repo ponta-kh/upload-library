@@ -6,9 +6,9 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "@/components/shadcn/dialog";
-import { Button } from "@/components/shadcn/button";
-import type { ErrorColumnCellProps } from "@/types/componentProps";
+} from "../components/shadcn/dialog";
+import { Button } from "../components/shadcn/button";
+import type { ErrorColumnCellProps } from "../types/componentProps";
 
 export function ErrorColumnCell({ rowCount, errorMessages }: ErrorColumnCellProps) {
     const dialogTitle = `${rowCount}行目 エラー内容`;

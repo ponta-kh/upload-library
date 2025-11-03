@@ -1,4 +1,4 @@
-import type { ValidateString, ValidateNumber, ValidateDate, ValidateResult } from "@/types/validation";
+import type { ValidateString, ValidateNumber, ValidateDate, ValidateResult } from "../types/validation";
 
 /**
  * 文字列のバリデーションを実行する
