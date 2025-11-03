@@ -1,13 +1,17 @@
 import type { ValidateParsedDataResult } from "@/types/funcResult";
 
+/* ValidatedResultTable.tsx */
 export interface ValidatedResultTableProps {
-    tableHeader: {
-        label: React.ReactNode;
-        className?: string;
-    }[];
+    tableHeader: ValidatedResultTableHeader[];
     validatedData: ValidateParsedDataResult[];
 }
 
+export interface ValidatedResultTableHeader {
+    label: React.ReactNode;
+    className?: string;
+}
+
+/* ErrorColumnCell.tsx */
 export interface ErrorColumnCellProps {
     rowCount: number;
     errorMessages: string[];

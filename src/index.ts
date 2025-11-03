@@ -1,6 +1,6 @@
 /* interface  */
-export type { ValidateString, ValidateNumber, ValidateDate, ValidateResult } from "@/types/validation";
-export type { ValidateParsedDataResult } from "@/types/funcResult";
+export type { Validate, ValidateString, ValidateNumber, ValidateDate, ValidateResult } from "@/types/validation";
+export type { ValidateParsedDataResult, UploadValidationResult } from "@/types/funcResult";
 export type { ValidatedResultTableProps } from "@/types/componentProps";
 
 /* function */
