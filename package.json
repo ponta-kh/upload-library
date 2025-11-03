@@ -1,5 +1,5 @@
 {
-    "name": "@yourname/upload-library",
+    "name": "@pkh/csv-validator",
     "version": "0.8.0",
     "type": "module",
     "description": "CSVアップロード＆検証コンポーネントのReactライブラリ",
@@ -19,7 +19,7 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/yourname/upload-library.git"
+        "url": "https://github.com/ponta-kh/upload-library.git"
     },
     "publishConfig": {
         "access": "public"
