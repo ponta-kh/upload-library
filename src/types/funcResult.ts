@@ -18,5 +18,5 @@ export interface UploadValidationResult {
     success: boolean;
     validatedData: ValidateParsedDataResult[];
     hasError: boolean;
-    errorMessage: string[];
+    errorMessages: string[];
 }

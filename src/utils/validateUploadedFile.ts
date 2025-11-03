@@ -39,7 +39,7 @@ export async function validateUploadedFile(
             success: false,
             validatedData: [],
             hasError: false,
-            errorMessage: errorMessages,
+            errorMessages: errorMessages,
         };
     }
 
@@ -49,7 +49,7 @@ export async function validateUploadedFile(
             success: true,
             validatedData: [],
             hasError: false,
-            errorMessage: [],
+            errorMessages: [],
         };
     }
 
@@ -63,6 +63,6 @@ export async function validateUploadedFile(
         success: true,
         validatedData,
         hasError,
-        errorMessage: [],
+        errorMessages: [],
     };
 }

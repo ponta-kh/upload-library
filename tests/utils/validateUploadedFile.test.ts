@@ -20,7 +20,7 @@ describe("validateUploadedFile", () => {
         const result = await validateUploadedFile(file, [], row, rules);
 
         expect(result.success).toBe(false);
-        expect(result.errorMessage).toContain("Parsing failed");
+        expect(result.errorMessages).toContain("Parsing failed");
     });
 
     it("列数が期待値と一致しない場合、success が false を返すこと", async () => {
@@ -38,7 +38,7 @@ describe("validateUploadedFile", () => {
         const result = await validateUploadedFile(file, [], row, rules);
 
         expect(result.success).toBe(false);
-        expect(result.errorMessage).toContain(
+        expect(result.errorMessages).toContain(
             "列数が期待値と異なります。期待される列数は 3 ですが、ファイルには 2 列あります。",
         );
     });
@@ -77,7 +77,7 @@ describe("validateUploadedFile", () => {
         // 成功した結果を検証
         expect(result.success).toBe(true);
         expect(result.validatedData).toEqual(validatedData);
-        expect(result.errorMessage.length).toBe(0);
+        expect(result.errorMessages.length).toBe(0);
 
         // validateParsedData が正しい引数で呼び出されたことを確認
         expect(validateParsedDataSpy).toHaveBeenCalledWith(parsedData, rules, undefined);
